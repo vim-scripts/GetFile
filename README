@@ -1,0 +1,58 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3088
+
+This script  caches the content of a part of the filesystem and help retrieves the appropriate file based on a pattern.
+It has been heavily inspired by the FindFile plugin. However, this plugin is not limited to filename patterns only as you can type any part of a file path (thus including folders).
+The plugin also comes with some options that allow faster search like automatic search 'completion' of folders, case sensitivity, ...
+The pattern supports wildcards (* / ?).
+ 
+It is a 2 step process to use:
+    1. cache the files
+    2. search through them
+
+This is my first vim script so feel free to give me advices :)
+
+Here is the documentation that you can find inside the script header:
+
+               You can use the following functions:
+
+                 ":GetFileCacheFiles <path>" - Caches the files. Has to be called at least once before a call to ":GetFile".
+                 ":GetFileClearCache" - Clear the cache.
+                 ":GetFile" - Start searching for a file.
+
+               You may want to add the following lines in your ~/.vimrc file:
+               (or whatever shortcut you find suitable)
+
+               "nmap <silent> <unique> fc :GetFileCacheFiles .<CR>"
+               "nmap <silent> <unique> ff :GetFile<CR>"
+
+               Once in the "[GetFile]" buffer:
+                 
+                 Use "<Up>" / "<C-p>" and "<Down>" / "<C-n>" to select a file. 
+                 "<CR>" opens the selected file. (If no selection done, it opens the first file).
+                 "<ESC>" exits the buffer.
+
+               Supported Options that you can specify in your .vimrc file:
+
+                   "g:GetFileIgnoreList" 
+                       List of patterns to ignore.
+                       Default = ['*.o', '*.pyc', '*/tmp/*', '*~', '*/.svn/*', '*#']
+
+                   "g:GetFileIgnoreCase"
+                       Do not take case into account when searching files.
+                       Default = 0
+
+                   "g:GetFileAutoFillFolder"
+                       Speeds up the search when searching through folders as
+                       typing '/' is equivalent to typing '*/'.
+                       There are 3 possible values:
+                           0: do not use this option
+                           1: auto complete the current folder only. (match till
+                           the next '/' only)
+                           2: auto complete the entire sub hierarchy. (match
+                           till the last possible '/')
+                       Default = 1
+
+               Example of how to set an option in you .vimrc file:
+               
+                   "let g:GetFileAutoFillFolder = 2"
+
